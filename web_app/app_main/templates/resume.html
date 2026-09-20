@@ -198,7 +198,7 @@
         <div class="section">
           <div class="section__title">Education</div>
           <div class="section__list-item">
-            <div class="name">{{user.profile.education}}</div>
+            <div class="name">{{user.profile.get_education_display}} in {{user.profile.get_description_display}}</div>
           </div>
         </div>
 
@@ -219,18 +219,21 @@
 
         <div class="section">
           <div class="section__title">Development Roadmap & Learning Goals</div>
+          {% for road in user.roadmap_set.all %}
           <div class="section__list-item">
             <div class="text">
-              • <strong>Current Focus:</strong> Mastering
-              <strong>Django</strong>. Having previous background with
-              <strong>Node.js</strong>, I believe Python-based frameworks like
-              Django and FastAPI have a superior trajectory in the AI era.<br />
-              • <strong>Future Roadmap:</strong> Planning to master the
-              <strong>Vue.js</strong> frontend framework and dedicate more
-              deep-dive time into <strong>Linux</strong> administration and
-              environment workflows.
+              • <strong>{{road.title}} from {{road.year}}</strong> :
+              {{road.details}}
             </div>
           </div>
+          {%empty%}
+          <div class="section__list-item">
+            <div class="text">
+              • <strong>N/A</strong>
+              
+            </div>
+          </div>
+          {%endfor%}
         </div>
 
         <div class="section">
