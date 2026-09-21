@@ -141,6 +141,40 @@
         color: #f0f0f0;
       }
 
+      .skills-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .skills-item .left {
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .skills-item .right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .skills-item .right input {
+        display: none;
+      }
+      .skills-item .right label {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: rgba(168, 230, 207, 0.2);
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .skills-item .right input:checked + label {
+        background-color: #a8e6cf;
+        box-shadow: 0 0 6px rgba(168, 230, 207, 0.5);
+      }
+
       @media (max-width: 600px) {
         .header {
           flex-direction: column-reverse;
@@ -198,7 +232,10 @@
         <div class="section">
           <div class="section__title">Education</div>
           <div class="section__list-item">
-            <div class="name">{{user.profile.education}}</div>
+            <div class="name">
+              {{user.profile.get_education_display}} in
+              {{user.profile.get_description_display}}
+            </div>
           </div>
         </div>
 
@@ -219,50 +256,61 @@
 
         <div class="section">
           <div class="section__title">Development Roadmap & Learning Goals</div>
+          {% for road in user.roadmap_set.all %}
           <div class="section__list-item">
             <div class="text">
-              • <strong>Current Focus:</strong> Mastering
-              <strong>Django</strong>. Having previous background with
-              <strong>Node.js</strong>, I believe Python-based frameworks like
-              Django and FastAPI have a superior trajectory in the AI era.<br />
-              • <strong>Future Roadmap:</strong> Planning to master the
-              <strong>Vue.js</strong> frontend framework and dedicate more
-              deep-dive time into <strong>Linux</strong> administration and
-              environment workflows.
+              • <strong>{{road.title}} from {{road.year}}</strong> :
+              {{road.details}}
             </div>
           </div>
+          {%empty%}
+          <div class="section__list-item">
+            <div class="text">• <strong>N/A</strong></div>
+          </div>
+          {%endfor%}
         </div>
 
         <div class="section">
           <div class="section__title">Cinema & Media</div>
           <div class="section__list-item">
             <div class="text">
-              • <strong>Series:</strong> Highly enjoy
-              <strong>Family Guy</strong> (which I consider a profound and
-              brilliant series) and <strong>Game of Thrones</strong>.<br />
-              • <strong>Cinema:</strong> Fan of
-              <strong>Christopher Nolan's The Dark Knight Trilogy</strong>, the
-              <strong>Saw</strong> series, biographical films like
-              <strong>Elvis</strong>, and <strong>Classic Cinema</strong>.
+              {%for cinema in user.cinemas.all%} •
+              <strong>{{ cinema.title }}</strong> {{
+              cinema.get_media_type_display }} in {{ cinema.get_genre_display }}
+              genre.<br />
+              Reason : {% if cinema.reason %} {{ cinema.reason }}<br />
+              {% else %}N/A<br />{% endif %} {% empty %} • <strong>N/A</strong>
+              {%endfor%}
             </div>
           </div>
         </div>
 
         <div class="section">
           <div class="section__title">Video Games</div>
-          <div class="section__list-item">
-            <div class="text">
-              • <strong>Favorite Titles:</strong>
-              <strong>Red Dead Redemption 2</strong> and the entire
-              <strong>Batman Arkham series</strong>.<br />
-              • <strong>Far Cry Series:</strong> Passionate about
-              <strong>Far Cry 3</strong>, <strong>Far Cry 4</strong>, and
-              <strong>Far Cry Primal</strong>.<br />
-              • <strong>Soulslike:</strong> Passionate about the
-              <strong>Soulslike</strong> genre, with plans to play
-              <strong>Elden Ring</strong> in the near future.
+          {% for game in user.games.all %}
+          <div class="skills-item">
+            <div class="left">{{game.name}}</div>
+            <div class="right">
+              <input id="g1_1" type="checkbox" {% if game.level >= 1 %} checked
+              {% endif %} />
+              <label for="g1_1"></label>
+              <input id="g1_2" type="checkbox" {% if game.level >= 2 %} checked
+              {% endif %} />
+              <label for="g1_2"></label>
+              <input id="g1_3" type="checkbox" {% if game.level >= 3 %} checked
+              {% endif %} />
+              <label for="g1_3"></label>
+              <input id="g1_4" type="checkbox" {% if game.level >= 4 %} checked
+              {% endif %} />
+              <label for="g1_4"></label>
+              <input id="g1_5" type="checkbox" {% if game.level >= 5 %} checked
+              {% endif %} />
+              <label for="g1_5"></label>
             </div>
           </div>
+          {%empty%}
+          <strong>N/A</strong>
+          {%endfor%}
         </div>
 
         <div class="section">
