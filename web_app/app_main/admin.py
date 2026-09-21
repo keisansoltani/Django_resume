@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app_main.models import Profile,experience,Roadmap
+from app_main.models import Profile,experience,Roadmap,Cinema,VideoGame
 # from app_main.models import experience
 
 
@@ -7,3 +7,5 @@ from app_main.models import Profile,experience,Roadmap
 admin.site.register(Profile)
 admin.site.register(experience)
 admin.site.register(Roadmap)
+admin.site.register(Cinema)
+admin.site.register(VideoGame)

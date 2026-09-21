@@ -47,3 +47,42 @@ class Roadmap(models.Model):
     details=models.TextField(null=True)
     year=models.CharField(max_length=4)
 
+
+class Cinema(models.Model):
+    MEDIA_TYPE_CHOICES = [
+        ('series', 'Series'),
+        ('film', 'Film'),
+        ('tv', 'TV'),
+        ('other', 'Other'),
+    ]
+
+    GENRE_CHOICES = [
+        ('action', 'Action'),
+        ('comedy', 'Comedy'),
+        ('drama', 'Drama'),
+        ('horror', 'Horror'),
+        ('romance', 'Romance'),
+        ('scifi', 'Sci-Fi'),
+        ('thriller', 'Thriller'),
+        ('other', 'Other'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cinemas')
+    title = models.CharField(max_length=100)  # عنوان فیلم یا سریال (مثلاً Breaking Bad)
+    media_type = models.CharField(max_length=20, choices=MEDIA_TYPE_CHOICES)  # نوع (فیلم، سریال، ...)
+    genre = models.CharField(max_length=30, choices=GENRE_CHOICES)  # ژانر
+    reason = models.TextField(blank=True)  # چرا این رو پیشنهاد یا دوست داری؟
+
+
+
+class VideoGame(models.Model):
+    LEVEL_CHOICES = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,related_name='games')
+    name=models.CharField(max_length=100,null=True)
+    level = models.PositiveSmallIntegerField(choices=LEVEL_CHOICES, default=1)
