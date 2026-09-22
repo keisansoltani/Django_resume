@@ -275,8 +275,8 @@
           <div class="section__list-item">
             <div class="text">
               {%for cinema in user.cinemas.all%} •
-              <strong>{{ cinema.title }}</strong> {{
-              cinema.get_media_type_display }} in {{ cinema.get_genre_display }}
+              <strong>{{ cinema.title }}</strong> 
+              {{cinema.get_media_type_display }} in {{ cinema.get_genre_display }}
               genre.<br />
               Reason : {% if cinema.reason %} {{ cinema.reason }}<br />
               {% else %}N/A<br />{% endif %} {% empty %} • <strong>N/A</strong>
