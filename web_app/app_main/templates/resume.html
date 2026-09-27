@@ -316,29 +316,18 @@
         <div class="section">
           <div class="section__title">Music Taste</div>
           <div class="section__list-item">
-            <div class="text">
-              • <strong>Elvis Presley:</strong> The King of Rock and Roll.<br />
-              • <strong>Dean Martin:</strong> The King of Cool.<br />
-              • <strong>2Pac:</strong> The King of Old School Hip-Hop.
+            {% for music in user.music.all %}
+                <div class="text">
+              • <strong>{{music}}</strong><br />
             </div>
-          </div>
-        </div>
+            {%empty%}
+            <div class="text">• <strong>N/A</strong></div>
+            {%endfor%}
 
-        <div class="section">
-          <div class="section__title">Professional Interests</div>
-          <div class="section__list-item">
-            <div class="text">
-              • <strong>Programming & Math:</strong> Passionate about
-              <strong>C++</strong> (my first language), algorithms, data
-              structures, and advanced mathematics, specifically
-              <strong>Linear Algebra</strong> and
-              <strong>Statistics</strong>.<br />
-              • <strong>Architecture:</strong> Deeply fascinated by building
-              construction and structural engineering projects.
-            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
 </html>
+{% comment %} pass=123 {% endcomment %}

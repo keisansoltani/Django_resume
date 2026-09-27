@@ -86,3 +86,14 @@ class VideoGame(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,related_name='games')
     name=models.CharField(max_length=100,null=True)
     level = models.PositiveSmallIntegerField(choices=LEVEL_CHOICES, default=1)
+
+
+class Music(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,related_name='music')
+    singer_name=models.CharField(max_length=100)
+    singer_description=models.TextField(blank=True, default="")
+
+    def __str__(self):
+        return f"{self.singer_name} | {self.singer_description}" if self.singer_description else self.singer_name
+
+    
