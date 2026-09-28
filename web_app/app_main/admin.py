@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app_main.models import Profile,experience,Roadmap,Cinema,VideoGame,Music
+from app_main.models import Profile,experience,Roadmap,Cinema,VideoGame,Music,Skill
 # from app_main.models import experience
 
 

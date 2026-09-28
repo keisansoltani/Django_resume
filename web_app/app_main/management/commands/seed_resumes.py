@@ -1,16 +1,14 @@
 import random
-
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from faker import Faker
 
-from app_main.models import Profile, experience, Roadmap, Cinema, VideoGame, Music
+from app_main.models import Profile, experience, Roadmap, Cinema, VideoGame, Music, Skill
 
 
 class Command(BaseCommand):
-    help = "Cleans old data and seeds database with 50 fresh users"
+    help = "Seed database with realistic resumes for directory testing"
 
     GAME_TITLES = [
         "The Witcher 3", "Red Dead Redemption 2", "Elden Ring", "Cyberpunk 2077",
@@ -48,82 +46,91 @@ class Command(BaseCommand):
         "Linkin Park", "Shawn Mendes", "Dua Lipa", "Sam Smith"
     ]
 
+    SKILL_NAMES = [
+        "Python", "Django", "FastAPI", "REST API", "PostgreSQL", "Redis",
+        "Git", "Docker", "Linux", "JavaScript", "TypeScript", "React",
+        "HTML/CSS", "SQL"
+    ]
+
     def handle(self, *args, **options):
         fake = Faker()
-        total_users = 50
 
-        # ۱. پاک کردن کاربران قبلی بدون حذف اکانت ادمین
-        self.stdout.write(self.style.WARNING("Deleting previous non-admin users and their data..."))
-        deleted_count, _ = User.objects.filter(is_superuser=False).delete()
-        self.stdout.write(self.style.SUCCESS(f"Deleted {deleted_count} old records."))
+        users = list(User.objects.filter(is_superuser=False).order_by("id"))
+        if not users:
+            self.stdout.write(self.style.ERROR("No users found. Please create some users first."))
+            return
 
-        # ۲. تولید دیتای جدید
-        self.stdout.write(self.style.NOTICE(f"Generating data for {total_users} new users..."))
-
-        education_keys = [choice[0] for choice in Profile.EDUCATION_CHOICES]
-        field_keys = [choice[0] for choice in Profile.FIELD_CHOICES]
-        media_type_keys = [choice[0] for choice in Cinema.MEDIA_TYPE_CHOICES]
-        genre_keys = [choice[0] for choice in Cinema.GENRE_CHOICES]
-
-        default_password = make_password("123")
-
-        users_to_create = []
-        for _ in range(total_users):
-            username = f"{fake.user_name()}_{random.randint(100, 9999)}"
-            users_to_create.append(
-                User(
-                    username=username,
-                    email=fake.unique.email(),
-                    password=default_password,
-                    first_name=fake.first_name(),
-                    last_name=fake.last_name(),
-                )
-            )
+        education_keys = [c[0] for c in Profile.EDUCATION_CHOICES]
+        field_keys = [c[0] for c in Profile.FIELD_CHOICES]
+        media_type_keys = [c[0] for c in Cinema.MEDIA_TYPE_CHOICES]
+        genre_keys = [c[0] for c in Cinema.GENRE_CHOICES]
 
         with transaction.atomic():
-            created_users = User.objects.bulk_create(users_to_create)
+            experience.objects.filter(user__in=users).delete()
+            Roadmap.objects.filter(user__in=users).delete()
+            Cinema.objects.filter(user__in=users).delete()
+            VideoGame.objects.filter(user__in=users).delete()
+            Music.objects.filter(user__in=users).delete()
+            Skill.objects.filter(user__in=users).delete()
 
-            profiles = []
+            existing_profiles = {p.user_id: p for p in Profile.objects.filter(user__in=users)}
+            profiles_to_create = []
+            profiles_to_update = []
+
+            for u in users:
+                prof = existing_profiles.get(u.id)
+                if prof:
+                    prof.phone = fake.phone_number()
+                    prof.education = random.choice(education_keys)
+                    prof.description = random.choice(field_keys)
+                    profiles_to_update.append(prof)
+                else:
+                    profiles_to_create.append(
+                        Profile(
+                            user=u,
+                            phone=fake.phone_number(),
+                            education=random.choice(education_keys),
+                            description=random.choice(field_keys)
+                        )
+                    )
+
+            if profiles_to_create:
+                Profile.objects.bulk_create(profiles_to_create)
+            if profiles_to_update:
+                Profile.objects.bulk_update(profiles_to_update, ["phone", "education", "description"])
+
             experiences = []
             roadmaps = []
             cinemas = []
             games = []
             musics = []
+            skills = []
 
-            for user in created_users:
-                profiles.append(
-                    Profile(
-                        user=user,
-                        phone=fake.phone_number(),
-                        education=random.choice(education_keys),
-                        description=random.choice(field_keys)
-                    )
-                )
-
+            for u in users:
                 for _ in range(random.randint(1, 3)):
                     experiences.append(
                         experience(
-                            user=user,
+                            user=u,
                             title=random.choice(self.JOB_TITLES),
                             details=fake.paragraph(nb_sentences=2)
                         )
                     )
 
-                start_year = random.randint(2018, 2022)
-                for idx in range(random.randint(2, 4)):
+                start_yr = random.randint(2018, 2022)
+                for i in range(random.randint(2, 4)):
                     roadmaps.append(
                         Roadmap(
-                            user=user,
+                            user=u,
                             title=random.choice(self.ROADMAP_MILESTONES),
                             details=fake.sentence(nb_words=8),
-                            year=str(start_year + idx)
+                            year=str(start_yr + i)
                         )
                     )
 
                 for title in random.sample(self.CINEMA_TITLES, k=random.randint(2, 4)):
                     cinemas.append(
                         Cinema(
-                            user=user,
+                            user=u,
                             title=title,
                             media_type=random.choice(media_type_keys),
                             genre=random.choice(genre_keys),
@@ -134,7 +141,7 @@ class Command(BaseCommand):
                 for title in random.sample(self.GAME_TITLES, k=random.randint(2, 4)):
                     games.append(
                         VideoGame(
-                            user=user,
+                            user=u,
                             name=title,
                             level=random.randint(1, 5)
                         )
@@ -143,19 +150,28 @@ class Command(BaseCommand):
                 for _ in range(random.randint(1, 3)):
                     musics.append(
                         Music(
-                            user=user,
+                            user=u,
                             singer_name=random.choice(self.SINGER_NAMES),
                             singer_description=fake.sentence(nb_words=10)
                         )
                     )
 
-            Profile.objects.bulk_create(profiles)
+                for name in random.sample(self.SKILL_NAMES, k=random.randint(4, 7)):
+                    skills.append(
+                        Skill(
+                            user=u,
+                            name=name,
+                            level=random.randint(1, 5)
+                        )
+                    )
+
             experience.objects.bulk_create(experiences)
             Roadmap.objects.bulk_create(roadmaps)
             Cinema.objects.bulk_create(cinemas)
             VideoGame.objects.bulk_create(games)
             Music.objects.bulk_create(musics)
+            Skill.objects.bulk_create(skills)
 
-        self.stdout.write(
-            self.style.SUCCESS(f"Done! Successfully created {total_users} clean users with Music.")
-        )
+        self.stdout.write(self.style.SUCCESS(f"Successfully seeded/updated {len(users)} users with new resume data."))
+
+

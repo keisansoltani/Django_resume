@@ -3,331 +3,574 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{user}}- Resume</title>
+    <title>{{ user }} - Resume</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        min-height: 100vh;
-        background-color: #0b1d33;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 15px;
-        line-height: 1.7;
-        color: #ffffff;
-        padding: 40px 20px;
-      }
-
-      .container {
-        max-width: 750px;
-        background-color: #102a45;
-        margin: 0 auto;
-        border-radius: 8px;
-        padding: 45px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .header {
-        margin-bottom: 35px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding-bottom: 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .header-text {
-        flex: 1;
-      }
-
-      .avatar-container {
-        width: 220px;
-        height: 220px;
-        border-radius: 50%;
-        border: 3px solid #a8e6cf;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #183a5e;
-        flex-shrink: 0;
-      }
-
-      .avatar-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-      }
-
-      .avatar-placeholder {
-        color: #a8e6cf;
-        font-size: 12px;
-        text-align: center;
-        font-weight: 600;
-        padding: 10px;
-      }
-
-      .header .full-name {
-        font-size: 34px;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        letter-spacing: 1px;
-      }
-      .header .first-name {
-        font-weight: 700;
-        color: #ffffff;
-      }
-      .header .last-name {
-        font-weight: 300;
-        color: #a8e6cf;
-      }
-      .header .contact-info {
-        margin-bottom: 15px;
-        font-size: 14px;
-        color: #e0e0e0;
-      }
-      .header .contact-info a {
-        color: #ffffff;
-        text-decoration: none;
-      }
-      .header .contact-info a:hover {
-        text-decoration: underline;
-      }
-      .header .position {
-        display: block;
-        font-size: 15px;
-        font-weight: 600;
-        color: #a8e6cf;
-        margin-bottom: 8px;
-      }
-      .header .desc {
-        color: #f0f0f0;
-        font-weight: 300;
-      }
-
-      .details .section {
-        margin-bottom: 30px;
-      }
-      .details .section__title {
-        letter-spacing: 1.5px;
-        color: #a8e6cf;
-        font-weight: 700;
-        font-size: 16px;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-        border-bottom: 1px solid rgba(168, 230, 207, 0.2);
-        padding-bottom: 5px;
-      }
-      .details .section__list-item {
-        margin-bottom: 12px;
-      }
-      .details .name {
-        font-weight: 600;
-        color: #ffffff;
-      }
-      .details .text,
-      .details .desc {
-        color: #f0f0f0;
-      }
-
-      .skills-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-      }
-      .skills-item .left {
-        font-weight: 600;
-        color: #ffffff;
-      }
-      .skills-item .right {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .skills-item .right input {
-        display: none;
-      }
-      .skills-item .right label {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: rgba(168, 230, 207, 0.2);
-        cursor: pointer;
-        transition:
-          background-color 0.2s,
-          box-shadow 0.2s;
-      }
-      .skills-item .right input:checked + label {
-        background-color: #a8e6cf;
-        box-shadow: 0 0 6px rgba(168, 230, 207, 0.5);
-      }
-
-      @media (max-width: 600px) {
-        .header {
-          flex-direction: column-reverse;
-          text-align: center;
+        :root {
+            --bg-main: #0b1d33;
+            --bg-card: #102a45;
+            --accent-color: #a8e6cf;
+            --accent-hover: #8ed6bd;
+            --text-main: #ffffff;
+            --text-muted: #8fa0b5;
+            --text-sub: #cbd5e1;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-accent: rgba(168, 230, 207, 0.25);
+            --font-stack: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         }
-        .avatar-container {
-          margin: 0 auto 15px;
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-main);
+            font-family: var(--font-stack);
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .dir-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .dir-topbar {
+            margin-bottom: 24px;
+        }
+
+        .dir-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+        }
+
+        .dir-title span {
+            color: var(--accent-color);
+        }
+
+        .dir-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .dir-controls-box {
+            background-color: var(--bg-card);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dir-search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .dir-search-input {
+            width: 100%;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-accent);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .dir-search-input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .dir-filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .dir-select {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-accent);
+            color: var(--text-main);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dir-select option {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .dir-btn-filter {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .dir-btn-filter:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .dir-btn-reset {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 14px;
+            text-align: center;
+            transition: color 0.2s ease;
+        }
+
+        .dir-btn-reset:hover {
+            color: var(--text-main);
+        }
+
+        .dir-skills-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+
+        .dir-skills-header {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .dir-checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 14px 10px;
+        }
+
+        .dir-checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-sub);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .dir-checkbox-label:hover {
+            color: var(--text-main);
+        }
+
+        .dir-checkbox {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid rgba(168, 230, 207, 0.4);
+            border-radius: 50%;
+            background-color: var(--bg-main);
+            cursor: pointer;
+            position: relative;
+            outline: none;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .dir-checkbox:hover {
+            border-color: var(--accent-color);
+        }
+
+        .dir-checkbox:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .dir-checkbox:checked::after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            width: 4px;
+            height: 8px;
+            border: solid var(--bg-main);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .dir-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-bottom: 35px;
+        }
+
+        .dir-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .dir-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(168, 230, 207, 0.35);
+        }
+
+        .dir-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .dir-avatar-badge {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background-color: #183a5e;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .dir-card-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .dir-card-role {
+            font-size: 13px;
+            color: var(--accent-color);
+            margin-top: 2px;
+        }
+
+        .dir-card-meta {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dir-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            word-break: break-all;
+        }
+
+        .dir-tags-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+            margin-top: auto;
+        }
+
+        .dir-tag {
+            background-color: rgba(168, 230, 207, 0.12);
+            color: var(--accent-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dir-btn-view {
+            display: block;
+            text-align: center;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .dir-btn-view:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+        }
+
+        .dir-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .dir-page-link {
+            min-width: 38px;
+            height: 38px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .dir-page-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .dir-page-link.active {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+            border-color: var(--accent-color);
+        }
+
+        .dir-page-disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 992px) {
+            .dir-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dir-checkbox-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .dir-grid {
+                grid-template-columns: 1fr;
+            }
+            .dir-filters-row {
+                grid-template-columns: 1fr;
+            }
+            .dir-checkbox-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <div class="header-text">
-          <div class="full-name">
-            <span class="first-name">{{user.first_name}}</span>
-            <span class="last-name">{{user.last_name}}</span>
-          </div>
-          <div class="contact-info">
-            <span>Email: </span>
-            <a href="mailto:{{user.email}}"
-              >{%if user.email%}{{user.email}}{%else%}N/A{%endif%}</a
-            >
-            <br />
-
-            <span>Phone:</span>
-            <a href="tel:{{user.profile.phone}}"
-              >{%if user.profile.phone%} {{user.profile.phone}}
-              {%else%}N/A{%endif%}</a
-            >
-          </div>
-          <div class="about">
-            <span class="position"
-              >Computer Science Undergraduate | Aspiring Full-Stack
-              Developer</span
-            >
-            <span class="desc">
-              Computer Science undergraduate student and digital components
-              specialist with an interest in building construction projects.
-              Currently focused on building my own full-stack personal website
-              from scratch.
-            </span>
-          </div>
-        </div>
-        <div class="avatar-container">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQECG0NxwkaX3T7WuLIEZEouUnzmqJioWCsECL36JV6Hmb_hdpTE-bO2pc&s=10"
-            alt="evil-patrick"
-          />
-        </div>
-      </div>
-
-      <div class="details">
-        <div class="section">
-          <div class="section__title">Education</div>
-          <div class="section__list-item">
-            <div class="name">
-              {{user.profile.get_education_display}} in
-              {{user.profile.get_description_display}}
+    <div class="dir-container" style="max-width: 900px;">
+      <div class="dir-controls-box" style="padding: 36px;">
+        
+        <!-- Header / Profile Info -->
+        <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 24px; margin-bottom: 24px;">
+          <div class="dir-card-header" style="margin-bottom: 16px;">
+            <div class="dir-avatar-badge" style="width: 64px; height: 64px; font-size: 22px;">
+              {{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}
+            </div>
+            <div>
+              <h1 class="dir-title" style="font-size: 32px; line-height: 1.2;">
+                {{ user.first_name }} <span>{{ user.last_name }}</span>
+              </h1>
+              <div class="dir-card-role" style="font-size: 15px; margin-top: 4px;">
+                Computer Science Undergraduate | Aspiring Full-Stack Developer
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="section">
-          <div class="section__title">Work & Projects</div>
-          {% for exp in user.experience_set.all %}
-          <div class="section__list-item">
-            <div class="name">{{exp.title}}</div>
-            <div class="desc">{{exp.details}}</div>
-          </div>
-          {%empty%}
-          <div class="section__list-item">
-            <div class="name">title: N/A</div>
-            <div class="desc">details: N/A</div>
-          </div>
-          {% endfor %}
-        </div>
-
-        <div class="section">
-          <div class="section__title">Development Roadmap & Learning Goals</div>
-          {% for road in user.roadmap_set.all %}
-          <div class="section__list-item">
-            <div class="text">
-              • <strong>{{road.title}} from {{road.year}}</strong> :
-              {{road.details}}
+          <div class="dir-card-meta" style="margin-bottom: 16px; font-size: 14px;">
+            <div class="dir-meta-item">
+              <span style="color: var(--accent-color); font-weight: 600;">Email:</span>
+              <a href="mailto:{{ user.email }}" style="color: var(--text-main); text-decoration: none;">
+                {% if user.email %}{{ user.email }}{% else %}N/A{% endif %}
+              </a>
+            </div>
+            <div class="dir-meta-item">
+              <span style="color: var(--accent-color); font-weight: 600;">Phone:</span>
+              <a href="tel:{{ user.profile.phone }}" style="color: var(--text-main); text-decoration: none;">
+                {% if user.profile.phone %}{{ user.profile.phone }}{% else %}N/A{% endif %}
+              </a>
             </div>
           </div>
-          {%empty%}
-          <div class="section__list-item">
-            <div class="text">• <strong>N/A</strong></div>
+
+          <div style="font-size: 14px; color: var(--text-sub); line-height: 1.6;">
+            Computer Science undergraduate student and digital components specialist with an interest in building construction projects. Currently focused on building my own full-stack personal website from scratch.
           </div>
-          {%endfor%}
         </div>
 
-        <div class="section">
-          <div class="section__title">Cinema & Media</div>
-          <div class="section__list-item">
-            <div class="text">
-              {%for cinema in user.cinemas.all%} •
-              <strong>{{ cinema.title }}</strong> 
-              {{cinema.get_media_type_display }} in {{ cinema.get_genre_display }}
-              genre.<br />
-              Reason : {% if cinema.reason %} {{ cinema.reason }}<br />
-              {% else %}N/A<br />{% endif %} {% empty %} • <strong>N/A</strong>
-              {%endfor%}
+        <!-- Details Sections -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- Education -->
+          <div class="dir-skills-section" style="border-top: none; padding-top: 0;">
+            <div class="dir-skills-header">Education</div>
+            <div style="font-size: 15px; color: var(--text-main); font-weight: 600;">
+              {{ user.profile.get_education_display }} in {{ user.profile.get_description_display }}
             </div>
           </div>
-        </div>
 
-        <div class="section">
-          <div class="section__title">Video Games</div>
-          {% for game in user.games.all %}
-          <div class="skills-item">
-            <div class="left">{{game.name}}</div>
-            <div class="right">
-              <input id="g1_1" type="checkbox" {% if game.level >= 1 %} checked
-              {% endif %} />
-              <label for="g1_1"></label>
-              <input id="g1_2" type="checkbox" {% if game.level >= 2 %} checked
-              {% endif %} />
-              <label for="g1_2"></label>
-              <input id="g1_3" type="checkbox" {% if game.level >= 3 %} checked
-              {% endif %} />
-              <label for="g1_3"></label>
-              <input id="g1_4" type="checkbox" {% if game.level >= 4 %} checked
-              {% endif %} />
-              <label for="g1_4"></label>
-              <input id="g1_5" type="checkbox" {% if game.level >= 5 %} checked
-              {% endif %} />
-              <label for="g1_5"></label>
+          <!-- Work & Projects -->
+          <div class="dir-skills-section">
+            <div class="dir-skills-header">Work & Projects</div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              {% for exp in user.experience_set.all %}
+              <div>
+                <div style="font-size: 15px; font-weight: 600; color: var(--text-main);">{{ exp.title }}</div>
+                <div style="font-size: 14px; color: var(--text-sub); margin-top: 2px;">{{ exp.details }}</div>
+              </div>
+              {% empty %}
+              <div>
+                <div style="font-size: 15px; font-weight: 600; color: var(--text-main);">title: N/A</div>
+                <div style="font-size: 14px; color: var(--text-sub); margin-top: 2px;">details: N/A</div>
+              </div>
+              {% endfor %}
             </div>
           </div>
-          {%empty%}
-          <strong>N/A</strong>
-          {%endfor%}
-        </div>
 
-        <div class="section">
-          <div class="section__title">Music Taste</div>
-          <div class="section__list-item">
-            {% for music in user.music.all %}
-                <div class="text">
-              • <strong>{{music}}</strong><br />
+          <!-- Skills and Technologies -->
+          <div class="dir-skills-section">
+            <div class="dir-skills-header">Skills and Technologies</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              {% for skill in user.skills.all %}
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px;">
+                <span style="font-size: 14px; color: var(--text-main); font-weight: 500;">{{ skill.name }}</span>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <input id="s_{{ skill.id }}_1" type="checkbox" class="dir-checkbox" {% if skill.level >= 1 %} checked {% endif %} onclick="return false;" />
+                  <label for="s_{{ skill.id }}_1"></label>
+                  <input id="s_{{ skill.id }}_2" type="checkbox" class="dir-checkbox" {% if skill.level >= 2 %} checked {% endif %} onclick="return false;" />
+                  <label for="s_{{ skill.id }}_2"></label>
+                  <input id="s_{{ skill.id }}_3" type="checkbox" class="dir-checkbox" {% if skill.level >= 3 %} checked {% endif %} onclick="return false;" />
+                  <label for="s_{{ skill.id }}_3"></label>
+                  <input id="s_{{ skill.id }}_4" type="checkbox" class="dir-checkbox" {% if skill.level >= 4 %} checked {% endif %} onclick="return false;" />
+                  <label for="s_{{ skill.id }}_4"></label>
+                  <input id="s_{{ skill.id }}_5" type="checkbox" class="dir-checkbox" {% if skill.level >= 5 %} checked {% endif %} onclick="return false;" />
+                  <label for="s_{{ skill.id }}_5"></label>
+                </div>
+              </div>
+              {% empty %}
+              <strong style="font-size: 14px; color: var(--text-muted);">N/A</strong>
+              {% endfor %}
             </div>
-            {%empty%}
-            <div class="text">• <strong>N/A</strong></div>
-            {%endfor%}
-
           </div>
+
+          <!-- Development Roadmap & Learning Goals -->
+          <div class="dir-skills-section">
+            <div class="dir-skills-header">Development Roadmap & Learning Goals</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              {% for road in user.roadmap_set.all %}
+              <div style="font-size: 14px; color: var(--text-sub);">
+                • <strong style="color: var(--text-main);">{{ road.title }} from {{ road.year }}</strong> : {{ road.details }}
+              </div>
+              {% empty %}
+              <div style="font-size: 14px; color: var(--text-sub);">
+                • <strong style="color: var(--text-main);">N/A</strong>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Cinema & Media -->
+          <div class="dir-skills-section">
+            <div class="dir-skills-header">Cinema & Media</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              {% for cinema in user.cinemas.all %}
+              <div style="font-size: 14px; color: var(--text-sub); line-height: 1.6;">
+                • <strong style="color: var(--text-main);">{{ cinema.title }}</strong> {{ cinema.get_media_type_display }} in {{ cinema.get_genre_display }} genre.<br />
+                Reason : {% if cinema.reason %}{{ cinema.reason }}{% else %}N/A{% endif %}
+              </div>
+              {% empty %}
+              <div style="font-size: 14px; color: var(--text-sub);">
+                • <strong style="color: var(--text-main);">N/A</strong>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Video Games -->
+          <div class="dir-skills-section">
+            <div class="dir-skills-header">Video Games</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              {% for game in user.games.all %}
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px;">
+                <span style="font-size: 14px; color: var(--text-main); font-weight: 500;">{{ game.name }}</span>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <input id="g_{{ game.id }}_1" type="checkbox" class="dir-checkbox" {% if game.level >= 1 %} checked {% endif %} onclick="return false;" />
+                  <label for="g_{{ game.id }}_1"></label>
+                  <input id="g_{{ game.id }}_2" type="checkbox" class="dir-checkbox" {% if game.level >= 2 %} checked {% endif %} onclick="return false;" />
+                  <label for="g_{{ game.id }}_2"></label>
+                  <input id="g_{{ game.id }}_3" type="checkbox" class="dir-checkbox" {% if game.level >= 3 %} checked {% endif %} onclick="return false;" />
+                  <label for="g_{{ game.id }}_3"></label>
+                  <input id="g_{{ game.id }}_4" type="checkbox" class="dir-checkbox" {% if game.level >= 4 %} checked {% endif %} onclick="return false;" />
+                  <label for="g_{{ game.id }}_4"></label>
+                  <input id="g_{{ game.id }}_5" type="checkbox" class="dir-checkbox" {% if game.level >= 5 %} checked {% endif %} onclick="return false;" />
+                  <label for="g_{{ game.id }}_5"></label>
+                </div>
+              </div>
+              {% empty %}
+              <strong style="font-size: 14px; color: var(--text-muted);">N/A</strong>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Music Taste -->
+          <div class="dir-skills-section">
+            <div class="dir-skills-header">Music Taste</div>
+            <div class="dir-tags-box" style="margin-bottom: 0;">
+              {% for music in user.music.all %}
+              <span class="dir-tag">{{ music }}</span>
+              {% empty %}
+              <span style="font-size: 14px; color: var(--text-muted);">N/A</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Back to Directory -->
+          <div style="margin-top: 10px;">
+            <a href="/" class="dir-btn-view" style="display: inline-block;">Back to Directory</a>
+          </div>
+
         </div>
+
       </div>
     </div>
   </body>
 </html>
+
+
+
 {% comment %} pass=123 {% endcomment %}

@@ -96,4 +96,17 @@ class Music(models.Model):
     def __str__(self):
         return f"{self.singer_name} | {self.singer_description}" if self.singer_description else self.singer_name
 
+
+
+class Skill(models.Model):
+    LEVEL_CHOICES = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='skills')
+    name = models.CharField(max_length=100, null=True)
+    level = models.PositiveSmallIntegerField(choices=LEVEL_CHOICES, default=1)
     
