@@ -12,3 +12,9 @@ def resume(request,id):
     return render(request,'resume.html',context)
 
 
+def index(request):
+    users=User.objects.all()
+    context = {'users':users}
+    return render(request,'index.html',context)
+
+
