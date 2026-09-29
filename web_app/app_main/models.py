@@ -27,10 +27,6 @@ class Profile(models.Model):
     education=models.CharField(max_length=50,null=True,choices=EDUCATION_CHOICES)
     description=models.TextField(null=True,choices=FIELD_CHOICES)
     
-    @property
-    def get_education(self):
-        return dict(self.EDUCATION_CHOICES).get(self.education)
-
 
 
 class experience(models.Model):
