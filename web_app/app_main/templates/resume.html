@@ -130,30 +130,31 @@
           </div>
 
           <!-- Video Games -->
-          <div class="dir-skills-section">
-            <div class="dir-skills-header">Video Games</div>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              {% for game in user.games.all %}
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px;">
-                <span style="font-size: 14px; color: var(--text-main); font-weight: 500;">{{ game.name }}</span>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                  <input id="g_{{ game.id }}_1" type="checkbox" class="dir-checkbox" {% if game.level >= 1 %} checked {% endif %} onclick="return false;" />
-                  <label for="g_{{ game.id }}_1"></label>
-                  <input id="g_{{ game.id }}_2" type="checkbox" class="dir-checkbox" {% if game.level >= 2 %} checked {% endif %} onclick="return false;" />
-                  <label for="g_{{ game.id }}_2"></label>
-                  <input id="g_{{ game.id }}_3" type="checkbox" class="dir-checkbox" {% if game.level >= 3 %} checked {% endif %} onclick="return false;" />
-                  <label for="g_{{ game.id }}_3"></label>
-                  <input id="g_{{ game.id }}_4" type="checkbox" class="dir-checkbox" {% if game.level >= 4 %} checked {% endif %} onclick="return false;" />
-                  <label for="g_{{ game.id }}_4"></label>
-                  <input id="g_{{ game.id }}_5" type="checkbox" class="dir-checkbox" {% if game.level >= 5 %} checked {% endif %} onclick="return false;" />
-                  <label for="g_{{ game.id }}_5"></label>
-                </div>
-              </div>
-              {% empty %}
-              <strong style="font-size: 14px; color: var(--text-muted);">N/A</strong>
-              {% endfor %}
-            </div>
-          </div>
+<div class="dir-skills-section">
+  <div class="dir-skills-header">Video Games</div>
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    {% for game in user.games.all %}
+    <div style="display: flex; justify-content: space-between; align-items: center; {% if not forloop.last %}border-bottom: 1px dashed var(--border-color); padding-bottom: 8px;{% endif %}">
+      <span style="font-size: 14px; color: var(--text-main); font-weight: 500;">{{ game.name }}</span>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <input id="g_{{ game.id }}_1" type="checkbox" class="dir-checkbox" {% if game.level >= 1 %} checked {% endif %} onclick="return false;" />
+        <label for="g_{{ game.id }}_1"></label>
+        <input id="g_{{ game.id }}_2" type="checkbox" class="dir-checkbox" {% if game.level >= 2 %} checked {% endif %} onclick="return false;" />
+        <label for="g_{{ game.id }}_2"></label>
+        <input id="g_{{ game.id }}_3" type="checkbox" class="dir-checkbox" {% if game.level >= 3 %} checked {% endif %} onclick="return false;" />
+        <label for="g_{{ game.id }}_3"></label>
+        <input id="g_{{ game.id }}_4" type="checkbox" class="dir-checkbox" {% if game.level >= 4 %} checked {% endif %} onclick="return false;" />
+        <label for="g_{{ game.id }}_4"></label>
+        <input id="g_{{ game.id }}_5" type="checkbox" class="dir-checkbox" {% if game.level >= 5 %} checked {% endif %} onclick="return false;" />
+        <label for="g_{{ game.id }}_5"></label>
+      </div>
+    </div>
+    {% empty %}
+    <strong style="font-size: 14px; color: var(--text-muted);">N/A</strong>
+    {% endfor %}
+  </div>
+</div>
+
 
           <!-- Music Taste -->
           <div class="dir-skills-section">
@@ -169,7 +170,7 @@
 
           <!-- Back to Directory -->
           <div style="margin-top: 10px;">
-            <a href="/" class="dir-btn-view" style="display: inline-block;">Back to Directory</a>
+            <a href="{% url 'index' %}" class="dir-btn-view" style="display: inline-block;">Back to Directory</a>
           </div>
 
         </div>

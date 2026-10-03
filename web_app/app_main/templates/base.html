@@ -46,6 +46,7 @@
 
       .dir-topbar {
         margin-bottom: 24px;
+        text-align: center;
       }
 
       .dir-title {
@@ -394,11 +395,128 @@
           grid-template-columns: repeat(2, 1fr);
         }
       }
+
+      .dir-resume-container {
+        max-width: 900px;
+      }
+
+      .dir-resume-box {
+        padding: 36px;
+      }
+
+      .dir-resume-header {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+      }
+
+      .dir-avatar-large {
+        width: 64px;
+        height: 64px;
+        font-size: 22px;
+      }
+
+      .dir-title-large {
+        font-size: 32px;
+        line-height: 1.2;
+      }
+
+      .dir-role-large {
+        font-size: 15px;
+        margin-top: 4px;
+      }
+
+      .dir-meta-large {
+        margin-bottom: 16px;
+        font-size: 14px;
+      }
+
+      .dir-meta-key {
+        color: var(--accent-color);
+        font-weight: 600;
+      }
+
+      .dir-meta-value {
+        color: var(--text-main);
+        text-decoration: none;
+      }
+
+      .dir-resume-desc {
+        font-size: 14px;
+        color: var(--text-sub);
+        line-height: 1.6;
+      }
+
+      .dir-resume-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .dir-section-no-border {
+        border-top: none;
+        padding-top: 0;
+      }
+
+      .dir-item-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .dir-item-detail {
+        font-size: 14px;
+        color: var(--text-sub);
+        margin-top: 2px;
+      }
+
+      .dir-skill-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 8px;
+      }
+
+      .dir-skill-row:last-child {
+        border-bottom: none;
+      }
+
+      .dir-skill-name {
+        font-size: 14px;
+        color: var(--text-main);
+        font-weight: 500;
+      }
+
+      .dir-rating-box {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .dir-text-center {
+        text-align: center;
+      }
+
+      .dir-msg-empty {
+        padding: 48px 20px;
+        color: var(--text-muted);
+        font-size: 18px;
+      }
+
+      .dir-page-info {
+        margin-bottom: 12px;
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      .dir-inline-block {
+        display: inline-block;
+      }
     </style>
     {% endblock css %}
   </head>
   <body>
-    {% block content %} {% endblock content %}
-    {% block js %} {% endblock js %}
+    {% block content %}{% endblock content %}
   </body>
 </html>

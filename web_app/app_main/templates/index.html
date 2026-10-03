@@ -2,386 +2,182 @@
 
 {% block content %}
     <div class="dir-container">
-        <!-- Top Title Bar -->
         <div class="dir-topbar">
             <h1 class="dir-title">User <span>Directory</span></h1>
             <p class="dir-subtitle">Browse and explore verified developer profiles</p>
         </div>
 
-        <!-- Search and Filter Form -->
         <div class="dir-controls-box">
-            <form method="GET" action="#" class="dir-search-form">
+            <div class="dir-skills-header">FILTERS</div>
+            <form method="GET" action="{% url 'index' %}" class="dir-search-form">
                 <div>
                     <input 
-                        type="text" 
+                        type="search" 
                         name="q"
                         placeholder="Search by name, skill, or keyword..." 
                         class="dir-search-input"
+                        value="{{ q|default_if_none:'' }}"
                     >
                 </div>
+
 
                 <div class="dir-filters-row">
                     <select name="degree" class="dir-select">
                         <option value="">All Education Levels</option>
-                        <option value="1">Diploma</option>
-                        <option value="2">Associate</option>
-                        <option value="3">Bachelor</option>
-                        <option value="4">Master</option>
-                        <option value="5">PHD</option>
+                        <option value="associate" {% if degree == 'associate' %}selected{% endif %}>Associate Degree</option>
+                        <option value="bachelor" {% if degree == 'bachelor' %}selected{% endif %}>Bachelor's Degree</option>
+                        <option value="master" {% if degree == 'master' %}selected{% endif %}>Master's Degree</option>
+                        <option value="doctorate" {% if degree == 'doctorate' %}selected{% endif %}>Doctorate / Ph.D.</option>
+                        <option value="other" {% if degree == 'other' %}selected{% endif %}>Other</option>
                     </select>
 
                     <select name="major" class="dir-select">
                         <option value="">All Majors</option>
-                        <option value="1">Computer Science</option>
-                        <option value="2">Civil Engineering</option>
-                        <option value="3">Electrical Engineering</option>
-                        <option value="4">Mechanical Engineering</option>
+                        <option value="software_eng" {% if major == 'software_eng' %}selected{% endif %}>Software Engineering</option>
+                        <option value="ai_ml" {% if major == 'ai_ml' %}selected{% endif %}>Artificial Intelligence & Machine Learning</option>
+                        <option value="data_science" {% if major == 'data_science' %}selected{% endif %}>Data Science & Big Data</option>
+                        <option value="cybersecurity" {% if major == 'cybersecurity' %}selected{% endif %}>Cybersecurity & Network Defense</option>
+                        <option value="web_dev" {% if major == 'web_dev' %}selected{% endif %}>Web Development</option>
+                        <option value="devops" {% if major == 'devops' %}selected{% endif %}>DevOps & Cloud Computing</option>
+                        <option value="hardware_embedded" {% if major == 'hardware_embedded' %}selected{% endif %}>Hardware & Embedded Systems</option>
+                        <option value="game_dev" {% if major == 'game_dev' %}selected{% endif %}>Game Development</option>
+                        <option value="other" {% if major == 'other' %}selected{% endif %}>Other</option>
                     </select>
-
-                    <button type="submit" class="dir-btn-filter">Apply Filters</button>
-                    <a href="#" class="dir-btn-reset">Reset</a>
                 </div>
 
-                <!-- Checkbox Skills List: 7 top, 7 bottom -->
                 <div class="dir-skills-section">
                     <div class="dir-skills-header">SKILLS</div>
                     <div class="dir-checkbox-grid">
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="Python" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="Python" class="dir-checkbox" {% if 'Python' in skills %}checked{% endif %}>
                             <span>Python</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="Django" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="Django" class="dir-checkbox" {% if 'Django' in skills %}checked{% endif %}>
                             <span>Django</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="FastAPI" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="FastAPI" class="dir-checkbox" {% if 'FastAPI' in skills %}checked{% endif%}>
                             <span>FastAPI</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="REST API" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="REST API" class="dir-checkbox" {% if 'REST API' in skills %}checked{%endif%}>
                             <span>REST API</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="PostgreSQL" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="PostgreSQL" class="dir-checkbox" {% if 'PostgreSQL' in skills %}checked{%endif%}>
                             <span>PostgreSQL</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="Redis" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="Redis" class="dir-checkbox" {% if 'Redis' in skills %}checked{%endif%}>
                             <span>Redis</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="Git" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="Git" class="dir-checkbox" {% if 'Git' in skills %}checked{%endif%}>
                             <span>Git</span>
                         </label>
 
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="Docker" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="Docker" class="dir-checkbox" {% if 'Docker' in skills %}checked{%endif%}>
                             <span>Docker</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="Linux" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="Linux" class="dir-checkbox" {% if 'Linux' in skills %}checked{%endif%}>
                             <span>Linux</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="JavaScript" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="JavaScript" class="dir-checkbox" {% if 'JavaScript' in skills %}checked{%endif%}>
                             <span>JavaScript</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="TypeScript" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="TypeScript" class="dir-checkbox" {% if 'TypeScript' in skills %}checked{%endif%}>
                             <span>TypeScript</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="React" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="React" class="dir-checkbox" {% if 'React' in skills %}checked{%endif%}>
                             <span>React</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="HTML/CSS" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="HTML/CSS" class="dir-checkbox" {% if 'HTML/CSS' in skills %}checked{%endif%}>
                             <span>HTML/CSS</span>
                         </label>
                         <label class="dir-checkbox-label">
-                            <input type="checkbox" name="skill" value="SQL" class="dir-checkbox">
+                            <input type="checkbox" name="skill" value="SQL" class="dir-checkbox" {% if 'SQL' in skills %}checked{%endif%}>
                             <span>SQL</span>
                         </label>
                     </div>
                 </div>
+
+                <div class="dir-filters-row">
+                    <button type="submit" class="dir-btn-filter">Apply Filters</button>
+                    <a href="{% url 'index' %}" class="dir-btn-reset">Reset</a>
+                </div>
             </form>
         </div>
 
-        <!-- Cards Grid (9 items) -->
-        <div class="dir-grid">
-            <!-- Card 1 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">KS</div>
-                    <div>
-                        <div class="dir-card-name">Keisan Soltani</div>
-                        <div class="dir-card-role">Bachelor in Computer Science</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> contact@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +98 900 000 0000</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">Python</span>
-                    <span class="dir-tag">Django</span>
-                    <span class="dir-tag">PostgreSQL</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
+        {% if page_obj %}
+            <div class="dir-grid">
+                {% for user in page_obj %}
+                    <div class="dir-card" data-education="{{ user.profile.education }}" data-major="{{ user.profile.description }}">
+                        <div class="dir-card-header">
+                            <div class="dir-avatar-badge">{{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}</div>
+                            <div>
+                                <div class="dir-card-name">{{ user.get_full_name|default:user.username }}</div>
+                                <div class="dir-card-role">{{ user.profile.get_education_display }} in {{ user.profile.get_description_display }}</div>
+                            </div>
+                        </div>
+                        <div class="dir-card-meta">
+                            <div class="dir-meta-item"><span>Email:</span> {{ user.email }}</div>
+                            <div class="dir-meta-item"><span>Phone:</span> {{ user.profile.phone }}</div>
+                        </div>
+                        <div class="dir-tags-box">
+                            {% for skill in user.skills.all %}
+                                <span class="dir-tag">{{ skill.name }}</span>
+                            {% empty %}
+                                <span style="font-size: 14px; color: var(--text-muted);">N/A</span>
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'resume' user.id %}" class="dir-btn-view">View Resume</a>
+                    </div> 
+                {% endfor %}
             </div>
 
-            <!-- Card 2 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">AD</div>
-                    <div>
-                        <div class="dir-card-name">Amy Duke</div>
-                        <div class="dir-card-role">Master in Civil Engineering</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> amy.duke@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 019 2834</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">FastAPI</span>
-                    <span class="dir-tag">Docker</span>
-                    <span class="dir-tag">Linux</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
+            <div style="text-align: center; margin-bottom: 12px; color: var(--text-muted, #94a3b8); font-size: 14px;">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
             </div>
 
-            <!-- Card 3 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">MR</div>
-                    <div>
-                        <div class="dir-card-name">Michael Reed</div>
-                        <div class="dir-card-role">Bachelor in Electrical Engineering</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> m.reed@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 014 9921</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">C++</span>
-                    <span class="dir-tag">Linux</span>
-                    <span class="dir-tag">Git</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
-            </div>
+            <div class="dir-pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?{% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page=1" class="dir-page-link">&laquo;</a>
+                    <a href="?{% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}" class="dir-page-link">‹ Prev</a>
+                {% else %}
+                    <span class="dir-page-link dir-page-disabled">&laquo;</span>
+                    <span class="dir-page-link dir-page-disabled">‹ Prev</span>
+                {% endif %}
 
-            <!-- Card 4 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">SC</div>
-                    <div>
-                        <div class="dir-card-name">Sara Chen</div>
-                        <div class="dir-card-role">Master in Computer Science</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> sara.chen@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 018 7322</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">React</span>
-                    <span class="dir-tag">TypeScript</span>
-                    <span class="dir-tag">HTML/CSS</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
-            </div>
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <span class="dir-page-link active">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                        <a href="?{% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ num }}" class="dir-page-link">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
 
-            <!-- Card 5 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">DA</div>
-                    <div>
-                        <div class="dir-card-name">David Allen</div>
-                        <div class="dir-card-role">PHD in Mechanical Engineering</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> d.allen@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 012 3456</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">Python</span>
-                    <span class="dir-tag">SQL</span>
-                    <span class="dir-tag">Docker</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
+                {% if page_obj.has_next %}
+                    <a href="?{% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}" class="dir-page-link">Next ›</a>
+                    <a href="?{% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.paginator.num_pages }}" class="dir-page-link">&raquo;</a>
+                {% else %}
+                    <span class="dir-page-link dir-page-disabled">Next ›</span>
+                    <span class="dir-page-link dir-page-disabled">&raquo;</span>
+                {% endif %}
             </div>
-
-            <!-- Card 6 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">EP</div>
-                    <div>
-                        <div class="dir-card-name">Elena Petrova</div>
-                        <div class="dir-card-role">Bachelor in Computer Science</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> elena.p@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 016 7890</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">Django</span>
-                    <span class="dir-tag">Redis</span>
-                    <span class="dir-tag">REST API</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
+        {% else %}
+            <div style="text-align: center; padding: 48px 20px; color: var(--text-muted, #94a3b8); font-size: 18px;">
+                No candidates found matching your criteria.
             </div>
+        {% endif %}
 
-            <!-- Card 7 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">JW</div>
-                    <div>
-                        <div class="dir-card-name">James Wilson</div>
-                        <div class="dir-card-role">Associate in Electrical Engineering</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> j.wilson@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 017 4521</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">JavaScript</span>
-                    <span class="dir-tag">Git</span>
-                    <span class="dir-tag">Linux</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">LK</div>
-                    <div>
-                        <div class="dir-card-name">Leila Karimi</div>
-                        <div class="dir-card-role">Master in Computer Science</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> l.karimi@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +98 912 345 6789</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">Python</span>
-                    <span class="dir-tag">FastAPI</span>
-                    <span class="dir-tag">PostgreSQL</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
-            </div>
-
-            <!-- Card 9 -->
-            <div class="dir-card">
-                <div class="dir-card-header">
-                    <div class="dir-avatar-badge">OM</div>
-                    <div>
-                        <div class="dir-card-name">Oliver Miller</div>
-                        <div class="dir-card-role">Bachelor in Civil Engineering</div>
-                    </div>
-                </div>
-                <div class="dir-card-meta">
-                    <div class="dir-meta-item"><span>Email:</span> o.miller@example.com</div>
-                    <div class="dir-meta-item"><span>Phone:</span> +1 555 013 8812</div>
-                </div>
-                <div class="dir-tags-box">
-                    <span class="dir-tag">SQL</span>
-                    <span class="dir-tag">Docker</span>
-                    <span class="dir-tag">HTML/CSS</span>
-                </div>
-                <a href="#" class="dir-btn-view">View Resume</a>
-            </div>
-        </div>
-
-        <!-- Pagination Controls -->
-        <div class="dir-pagination">
-            <span class="dir-page-link dir-page-disabled">‹ Prev</span>
-            <span class="dir-page-link active">1</span>
-            <a href="#" class="dir-page-link">2</a>
-            <a href="#" class="dir-page-link">3</a>
-            <a href="#" class="dir-page-link">Next ›</a>
-        </div>
     </div>
 {% endblock content %}
 
-
-
-
-
-{% block js %}
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.querySelector('.dir-search-input');
-        const degreeSelect = document.querySelector('select[name="degree"]');
-        const majorSelect = document.querySelector('select[name="major"]');
-        const checkboxes = document.querySelectorAll('.dir-checkbox');
-        const resetButton = document.querySelector('.dir-btn-reset');
-        const cards = document.querySelectorAll('.dir-card');
-
-        function filterCards() {
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            const selectedDegree = degreeSelect && degreeSelect.value ? degreeSelect.options[degreeSelect.selectedIndex].text.toLowerCase() : '';
-            const selectedMajor = majorSelect && majorSelect.value ? majorSelect.options[majorSelect.selectedIndex].text.toLowerCase() : '';
-            
-            const selectedSkills = Array.from(checkboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value.toLowerCase());
-
-            cards.forEach(card => {
-                const name = card.querySelector('.dir-card-name')?.textContent.toLowerCase() || '';
-                const role = card.querySelector('.dir-card-role')?.textContent.toLowerCase() || '';
-                const tags = Array.from(card.querySelectorAll('.dir-tag')).map(t => t.textContent.toLowerCase());
-                
-                const matchesQuery = !query || name.includes(query) || role.includes(query) || tags.some(t => t.includes(query));
-                const matchesDegree = !selectedDegree || role.includes(selectedDegree);
-                const matchesMajor = !selectedMajor || role.includes(selectedMajor);
-                const matchesSkills = selectedSkills.length === 0 || selectedSkills.every(skill => tags.includes(skill));
-
-                if (matchesQuery && matchesDegree && matchesMajor && matchesSkills) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('input', filterCards);
-        }
-
-        if (degreeSelect) {
-            degreeSelect.addEventListener('change', filterCards);
-        }
-
-        if (majorSelect) {
-            majorSelect.addEventListener('change', filterCards);
-        }
-
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', filterCards);
-        });
-
-        if (resetButton) {
-            resetButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (searchInput) searchInput.value = '';
-                if (degreeSelect) degreeSelect.selectedIndex = 0;
-                if (majorSelect) majorSelect.selectedIndex = 0;
-                
-                checkboxes.forEach(cb => cb.checked = false);
-                
-                filterCards();
-            });
-        }
-    });
-</script>
-{% endblock js %}
 
