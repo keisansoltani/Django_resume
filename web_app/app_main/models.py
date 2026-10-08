@@ -26,11 +26,14 @@ class Profile(models.Model):
     phone=models.CharField(max_length=50)
     education=models.CharField(max_length=50,null=True,choices=EDUCATION_CHOICES)
     description=models.TextField(null=True,choices=FIELD_CHOICES)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
     
 
 
 class experience(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE,null=True)
     title=models.CharField(max_length=70)
     details=models.TextField()
     
@@ -38,7 +41,7 @@ class experience(models.Model):
 
 
 class Roadmap(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
     title=models.CharField(max_length=70,null=True)
     details=models.TextField(null=True)
     year=models.CharField(max_length=4)
@@ -102,7 +105,7 @@ class Skill(models.Model):
         (4, '4'),
         (5, '5'),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='skills')
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, related_name='skills')
     name = models.CharField(max_length=100, null=True)
     level = models.PositiveSmallIntegerField(choices=LEVEL_CHOICES, default=1)
     

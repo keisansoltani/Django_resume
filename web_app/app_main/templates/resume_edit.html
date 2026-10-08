@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ userUpdateForm.as_table }}
+        {{ profileUpdateForm.as_table }}
+    </table>
+    <hr />
+
+    <h3>Skills</h3>
+    {{ skillFormSet.management_form }}
+    <div id="skills-container">
+        {% for form in skillFormSet %}
+            <table class="formset-row">
+                {{ form.as_table }}
+            </table>
+        {% endfor %}
+    </div>
+    <div id="skills-empty" style="display:none;">
+        <table class="formset-row">
+            {{ skillFormSet.empty_form.as_table }}
+        </table>
+    </div>
+    <button type="button" onclick="addForm('skills')">Add Skill</button>
+    <hr />
+
+    <h3>Experience</h3>
+    {{ experienceFormSet.management_form }}
+    <div id="exp-container">
+        {% for form in experienceFormSet %}
+            <table class="formset-row">
+                {{ form.as_table }}
+            </table>
+        {% endfor %}
+    </div>
+    <div id="exp-empty" style="display:none;">
+        <table class="formset-row">
+            {{ experienceFormSet.empty_form.as_table }}
+        </table>
+    </div>
+    <button type="button" onclick="addForm('exp')">Add Experience</button>
+    <hr />
+
+    <h3>Roadmap</h3>
+    {{ roadmapFormSet.management_form }}
+    <div id="road-container">
+        {% for form in roadmapFormSet %}
+            <table class="formset-row">
+                {{ form.as_table }}
+            </table>
+        {% endfor %}
+    </div>
+    <div id="road-empty" style="display:none;">
+        <table class="formset-row">
+            {{ roadmapFormSet.empty_form.as_table }}
+        </table>
+    </div>
+    <button type="button" onclick="addForm('road')">Add Roadmap</button>
+    <hr />
+
+    <input type="submit" value="Update Profile">
+</form>
+
+<script>
+function addForm(prefix) {
+    const totalForms = document.querySelector(`input[name="${prefix}-TOTAL_FORMS"]`);
+    const formCount = parseInt(totalForms.value);
+    const template = document.getElementById(`${prefix}-empty`).innerHTML;
+    const newHtml = template.replace(/__prefix__/g, formCount);
+    document.getElementById(`${prefix}-container`).insertAdjacentHTML('beforeend', newHtml);
+    totalForms.value = formCount + 1;
+}
+</script>
+{% endblock content %}

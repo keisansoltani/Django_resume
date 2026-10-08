@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}{{ user.first_name }} {{ user.last_name }} - Resume{% endblock title %}
+{% block navbar %}
+
+{% endblock navbar %}
 {% block content %}
     <div class="dir-container" style="max-width: 900px;">
       <div class="dir-controls-box" style="padding: 36px;">
@@ -73,7 +76,7 @@
           <div class="dir-skills-section">
             <div class="dir-skills-header">Skills and Technologies</div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
-              {% for skill in user.skills.all %}
+              {% for skill in user.profile.skills.all %}
               <div style="display: flex; justify-content: space-between; align-items: center; {% if not forloop.last %}border-bottom: 1px dashed var(--border-color); padding-bottom: 8px;{% endif %}">
                 <span style="font-size: 14px; color: var(--text-main); font-weight: 500;">{{ skill.name }}</span>
                 <div style="display: flex; gap: 8px; align-items: center;">
@@ -94,6 +97,8 @@
               {% endfor %}
             </div>
           </div>
+
+
 
 
           <!-- Development Roadmap & Learning Goals -->

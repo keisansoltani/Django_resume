@@ -517,6 +517,10 @@
     {% endblock css %}
   </head>
   <body>
-    {% block content %}{% endblock content %}
+    {% block navbar %}
+    {% include 'components/nav.html' %}
+    {% endblock navbar %}
+    {% block content %}
+    {% endblock content %}
   </body>
 </html>
