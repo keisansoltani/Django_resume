@@ -18,7 +18,7 @@
         --text-main: #ffffff;
         --text-muted: #8fa0b5;
         --text-sub: #cbd5e1;
-        --border-color: rgba(255, 255, 255, 0.08);
+        --border-color: rgba(128, 5, 5, 0.08);
         --border-accent: rgba(168, 230, 207, 0.25);
         --font-stack: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
@@ -517,10 +517,13 @@
     {% endblock css %}
   </head>
   <body>
+ HEAD
     {% block navbar %}
     {% include 'components/nav.html' %}
     {% endblock navbar %}
     {% block content %}
-    {% endblock content %}
+
+    {% block content %}{% endblock content %}
+DEV
   </body>
 </html>

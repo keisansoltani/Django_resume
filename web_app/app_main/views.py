@@ -59,70 +59,20 @@ def resume(request, id):
 
 
 def index(request):
-    all_skills = [
-        'Python', 'Django', 'FastAPI', 'REST API', 'PostgreSQL', 
-        'Redis', 'Git', 'Docker', 'Linux', 'JavaScript', 
-        'TypeScript', 'React', 'HTML/CSS', 'SQL'
-    ]
-    all_majors = [
-        ('software_eng', 'Software Engineering'),
-        ('ai_ml', 'Artificial Intelligence & Machine Learning'),
-        ('data_science', 'Data Science & Big Data'),
-        ('cybersecurity', 'Cybersecurity & Network Defense'),
-        ('web_dev', 'Web Development'),
-        ('devops', 'DevOps & Cloud Computing'),
-        ('hardware_embedded', 'Hardware & Embedded Systems'),
-        ('game_dev', 'Game Development'),
-        ('other', 'Other')
-    ]
-    all_degrees = [
-        ('associate', 'Associate Degree'),
-        ('bachelor', "Bachelor's Degree"),
-        ('master', "Master's Degree"),
-        ('doctorate', 'Doctorate / Ph.D.'),
-        ('other', 'Other'),
-    ]
-    q = request.GET.get('q', '')
-    skills = request.GET.getlist('skill')
-    degree = request.GET.get('degree', '')
-    major = request.GET.get('major', '')
-    users = User.objects.all()
-
+    q = request.GET.get('q')
     if q:
-        users = users.filter(
-            Q(first_name__icontains=q) |
-            Q(last_name__icontains=q) |
-            Q(profile__skills__name__icontains=q)
-        )
-
-    if skills:
-        for s in skills:
-            users = users.filter(profile__skills__name=s)
-
-    if degree:
-        users = users.filter(profile__education=degree)
-
-    if major:
-        users = users.filter(profile__description=major)
-
-    users = users.distinct().order_by('id')
-
+        users=User.objects.filter(
+        Q(first_name__icontains=q)|
+        Q(last_name__icontains=q)|
+        Q(skills__name__icontains=q)
+        ).distinct()
+    else:
+        users=User.objects.all()
     items_per_page = 9
     paginator = Paginator(users, items_per_page)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-
-    context = {
-        'page_obj': page_obj,
-        'q': q,
-        'skills': skills,
-        'degree': degree,
-        'major': major,
-        'all_skills': all_skills,
-        'all_majors': all_majors,
-        'all_degrees': all_degrees
-    }
-
+    context={'page_obj':page_obj,'q':q}
     return render(request, "index.html", context)
 
 

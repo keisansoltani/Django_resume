@@ -25,16 +25,36 @@
                 <div class="dir-filters-row">
                     <select name="degree" class="dir-select">
                         <option value="">All Education Levels</option>
+HEAD
                         {% for val,label in all_degrees %}
                         <option value="{{val}}" {% if degree == val%}selected{% endif %}>{{label}}</option>
                         {% endfor %}``
+
+                        <option value="associate" {% if degree == 'associate' %}selected{% endif %}>Associate Degree</option>
+                        <option value="bachelor" {% if degree == 'bachelor' %}selected{% endif %}>Bachelor's Degree</option>
+                        <option value="master" {% if degree == 'master' %}selected{% endif %}>Master's Degree</option>
+                        <option value="doctorate" {% if degree == 'doctorate' %}selected{% endif %}>Doctorate / Ph.D.</option>
+                        <option value="other" {% if degree == 'other' %}selected{% endif %}>Other</option>
+ DEV
                     </select>
 
                     <select name="major" class="dir-select">
                         <option value="">All Majors</option>
+ HEAD
                         {% for val,label in all_majors %}
                         <option value="{{val}}" {% if major == val%}selected{% endif %}>{{label}}</option>
                         {% endfor %}
+
+                        <option value="software_eng" {% if major == 'software_eng' %}selected{% endif %}>Software Engineering</option>
+                        <option value="ai_ml" {% if major == 'ai_ml' %}selected{% endif %}>Artificial Intelligence & Machine Learning</option>
+                        <option value="data_science" {% if major == 'data_science' %}selected{% endif %}>Data Science & Big Data</option>
+                        <option value="cybersecurity" {% if major == 'cybersecurity' %}selected{% endif %}>Cybersecurity & Network Defense</option>
+                        <option value="web_dev" {% if major == 'web_dev' %}selected{% endif %}>Web Development</option>
+                        <option value="devops" {% if major == 'devops' %}selected{% endif %}>DevOps & Cloud Computing</option>
+                        <option value="hardware_embedded" {% if major == 'hardware_embedded' %}selected{% endif %}>Hardware & Embedded Systems</option>
+                        <option value="game_dev" {% if major == 'game_dev' %}selected{% endif %}>Game Development</option>
+                        <option value="other" {% if major == 'other' %}selected{% endif %}>Other</option>
+ DEV
                     </select>
                 </div>
 
@@ -43,8 +63,66 @@
                     <div class="dir-checkbox-grid">
                         {% for item in all_skills %}
                         <label class="dir-checkbox-label">
+ HEAD
                             <input type="checkbox" name="skill" value="{{ item }}" class="dir-checkbox" {% if item in skills %}checked{% endif %}>
                             <span>{{ item }}</span>
+
+                            <input type="checkbox" name="skill" value="Python" class="dir-checkbox" {% if 'Python' in skills %}checked{% endif %}>
+                            <span>Python</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="Django" class="dir-checkbox" {% if 'Django' in skills %}checked{% endif %}>
+                            <span>Django</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="FastAPI" class="dir-checkbox" {% if 'FastAPI' in skills %}checked{% endif%}>
+                            <span>FastAPI</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="REST API" class="dir-checkbox" {% if 'REST API' in skills %}checked{%endif%}>
+                            <span>REST API</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="PostgreSQL" class="dir-checkbox" {% if 'PostgreSQL' in skills %}checked{%endif%}>
+                            <span>PostgreSQL</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="Redis" class="dir-checkbox" {% if 'Redis' in skills %}checked{%endif%}>
+                            <span>Redis</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="Git" class="dir-checkbox" {% if 'Git' in skills %}checked{%endif%}>
+                            <span>Git</span>
+                        </label>
+
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="Docker" class="dir-checkbox" {% if 'Docker' in skills %}checked{%endif%}>
+                            <span>Docker</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="Linux" class="dir-checkbox" {% if 'Linux' in skills %}checked{%endif%}>
+                            <span>Linux</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="JavaScript" class="dir-checkbox" {% if 'JavaScript' in skills %}checked{%endif%}>
+                            <span>JavaScript</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="TypeScript" class="dir-checkbox" {% if 'TypeScript' in skills %}checked{%endif%}>
+                            <span>TypeScript</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="React" class="dir-checkbox" {% if 'React' in skills %}checked{%endif%}>
+                            <span>React</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="HTML/CSS" class="dir-checkbox" {% if 'HTML/CSS' in skills %}checked{%endif%}>
+                            <span>HTML/CSS</span>
+                        </label>
+                        <label class="dir-checkbox-label">
+                            <input type="checkbox" name="skill" value="SQL" class="dir-checkbox" {% if 'SQL' in skills %}checked{%endif%}>
+                            <span>SQL</span>
+ DEV
                         </label>
                         {% endfor %}
                     </div>
@@ -73,7 +151,10 @@
                             <div class="dir-meta-item"><span>Phone:</span> {{ user.profile.phone }}</div>
                         </div>
                         <div class="dir-tags-box">
-                            {% for skill in user.profile.skills.all %}
+ HEAD
+
+                            {% for skill in user.skills.all %}
+DEV
                                 <span class="dir-tag">{{ skill.name }}</span>
                             {% empty %}
                                 <span style="font-size: 14px; color: var(--text-muted);">N/A</span>
